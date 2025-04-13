@@ -1,0 +1,15 @@
+program reg_rbst
+
+insheet using ${tmp}book-level-stella.csv, clear
+
+gen books3 = in_books3 == "True"
+
+gen treat = 0
+replace treat = 1 if pub_year> 2011 & pub_year < 2020
+
+foreach x in gpt35 gpt4o gemini llama8b llama70b claude {
+    reg `x'_score 1.treat, robust
+    }
+
+
+end

@@ -1,0 +1,50 @@
+
+qui adopath + "~/Dropbox/research/23.Copyright-LLMs/scripts/ado/"
+
+ssc install blindschemes, replace all
+set scheme plotplain, permanently
+
+declare_global
+cd ${path}
+
+///////////////////
+// Data Prep
+
+query_to_book
+
+
+///////////////////
+// Analysis
+
+
+// FIGURES
+
+// 1. schematic figure
+
+// 2. something that justifies the IV
+
+// 2a. histogram of years
+overlap_histogram
+
+// 2b. IV scatterplots
+
+
+// TABLES
+
+// 1. summary stats
+
+// 2. baseline regression
+
+// 3. robustness
+
+// 4. heterogeneity by popularity + fiction/non fiction
+
+
+
+
+
+
+
+
+
+

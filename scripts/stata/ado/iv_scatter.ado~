@@ -1,0 +1,10 @@
+program iv_scatter
+
+
+use ${tmp}book-level, clear
+
+binscatter books3 shares, np(10)
+
+
+
+end

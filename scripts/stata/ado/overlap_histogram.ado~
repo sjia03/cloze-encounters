@@ -1,0 +1,38 @@
+program overlap_histogram
+
+//insheet using ${rawdata}isbndb.csv, clear
+
+//use ~/Dropbox/research/7.books/more_data/books_in_print.dta, clear
+
+// overall histogram for books3
+insheet using ${rawdata}books3/books3-clean.csv, clear
+
+rename publication_year pub_year
+
+bysort pub_year: gen numbooks = _N
+bysort pub_year: drop if _n > 1
+keep pub_year numbooks
+drop if pub_year == .
+
+tw (bar numbooks pub_year if pub_year>1990, bcolor(sky)), ytitle("Num Books") xtitle("Publication Yr") 
+
+graph export ${tables}hist_books3.pdf, replace
+
+// in our sample
+// this doesnt look too good for now
+
+use ${tmp}book-level, clear
+
+rename publication_year pub_year
+
+bysort pub_year: gen numbooks = _N
+bysort pub_year: drop if _n > 1
+keep pub_year numbooks
+
+tw bar numbooks pub_year if pub_year > 1990 & pub_year < 2024, ytitle("Num Books") xtitle("Publication Yr")
+graph export ${tables}hist_books3_sample.pdf, replace
+
+
+
+
+end
