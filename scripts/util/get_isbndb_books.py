@@ -14,7 +14,7 @@ stop_word_page_number = 1
 non_stop_word_page_number = 1
 
 # Your REST API key
-headers = {'Authorization': '51236_26bea9f7e1d334642b0bf33f7b3fa9b0'}
+# headers = 
 
 # Base URL
 base_url = "https://api2.isbndb.com/books/"
