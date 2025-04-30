@@ -7,22 +7,24 @@ import pandas as pd
 import altair as alt
 
 # Must be the first Streamlit command
-st.set_page_config(page_title="Cloze Encounters: Find Name Cloze Score by Book", layout="wide")
+st.set_page_config(page_title="Cloze Encounters", layout="wide")
 
 # Load data
 book_df = load_books()
 query_df = load_queries()
 
-st.title("📚 Cloze Encounters: Find Name Cloze Score by Book")
+# --- Session state for navigation ---
+if "view" not in st.session_state:
+    st.session_state.view = "home"
 
 # --- Sidebar Search ---
 with st.sidebar:
     st.header("🔍 Search Filters")
-    search_title = st.text_input("Search by Title")
-    search_author = st.text_input("Search by Author")
-    genre_filter = st.selectbox("Select Genre", ["All", "Fiction", "Nonfiction"])
+    search_title = st.sidebar.text_input("Search by Title", key="search_title")
+    search_author = st.sidebar.text_input("Search by Author", key="search_author")
+    genre_filter = st.sidebar.selectbox("Select Genre", ["All", "Fiction", "Nonfiction"], key="genre_filter")
 
-# --- Filtering ---
+# --- Filter data ---
 filtered_df = book_df.copy()
 
 if search_title:
@@ -36,8 +38,18 @@ if genre_filter == "Fiction":
 elif genre_filter == "Nonfiction":
     filtered_df = filtered_df[filtered_df["nonfiction"] == 1]
 
-# --- Display Results ---
+# --- Update view state if search is active ---
 if search_title or search_author or genre_filter != "All":
+    st.session_state.view = "search"
+
+# --- Main View Logic ---
+if st.session_state.view == "search":
+    st.title("🔍 Search Results")
+    if st.button("🏠 Back to Homepage"):
+        st.session_state.clear()
+        st.session_state.view = "home"
+        st.rerun()
+
     if filtered_df.empty:
         st.warning("No books found. Try a different query.")
     else:
@@ -49,22 +61,20 @@ if search_title or search_author or genre_filter != "All":
             st.markdown(f"**Genres:** {row['genres']}")
             st.markdown(f"**Rating:** ⭐ {row['avg_rating']} (from {row['num_ratings']} ratings)")
 
-            # Model scores visualization
             render_model_score_chart(row)
-
-            # Expandable detailed view
             render_query_table(query_df, row["book_title"])
-
             st.divider()
 
 else:
-    # Homepage visuals if no search is active
+    # === HOMEPAGE ===
+    st.title("📚 Cloze Encounters: Find Name Cloze Score by Book")
     st.info("Use the sidebar to search for books by title, author, or genre. Search in all lowercase using hyphens instead of spaces. For example, 'lord-of-the-flies'.")
     st.subheader("📈 Dataset Overview")
 
     # Score distribution across models
     score_cols = ["gpt35_score", "gpt4o_score", "claude_score", "gemini_score", "llama8b_score", "llama70b_score"]
     score_long_df = book_df[score_cols].melt(var_name="Model", value_name="Score")
+
     model_name_map = {
         "gpt35_score": "GPT-3.5",
         "gpt4o_score": "GPT-4o",
@@ -81,7 +91,7 @@ else:
         .mark_area(opacity=0.4)
         .encode(
             x=alt.X("Score", bin=alt.Bin(maxbins=50), title="Model Score"),
-            y=alt.Y("count()", stack=None),
+            y=alt.Y("count()", stack=None, title="Count of Books"),
             color="Model:N",
             tooltip=["Model", "count()"]
         )
