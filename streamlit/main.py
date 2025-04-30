@@ -59,7 +59,7 @@ if search_title or search_author or genre_filter != "All":
 
 else:
     # Homepage visuals if no search is active
-    st.info("Use the sidebar to search for books by title, author, or genre.")
+    st.info("Use the sidebar to search for books by title, author, or genre. Search in all lowercase using hyphens instead of spaces. For example, 'lord-of-the-flies'.")
     st.subheader("📈 Dataset Overview")
 
     # Score distribution across models
