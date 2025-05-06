@@ -36,7 +36,7 @@ if search_author:
 if genre_filter == "Fiction":
     filtered_df = filtered_df[filtered_df["fiction"] == 1]
 elif genre_filter == "Nonfiction":
-    filtered_df = filtered_df[filtered_df["nonfiction"] == 1]
+    filtered_df = filtered_df[filtered_df["fiction"] == 0]
 
 # --- Update view state if search is active ---
 if search_title or search_author or genre_filter != "All":
