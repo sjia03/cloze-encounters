@@ -1,8 +1,6 @@
-# cloze-encounters
+# 📚 Cloze Encounters: Impact of Pirated Data on LLM Performance
 
-# 📚 Cloze Encounters: Measuring LLM Exposure to Copyrighted Texts
-
-This repository contains the full data pipeline and analysis code for the paper **“Cloze Encounters: Identifying Data Access Influence in Large Language Models”**. We investigate the effects of training data access—especially from copyrighted corpora—on large language model (LLM) performance, using the Books3 dataset and the name cloze task.
+This repository contains the full data pipeline and analysis code for the paper **“Cloze Encounters: Impact of Pirated Data on LLM Performance”**. We investigate the effects of training data access—especially from copyrighted corpora—on large language model (LLM) performance, using the Books3 dataset and the name cloze task.
 
 ---
 
