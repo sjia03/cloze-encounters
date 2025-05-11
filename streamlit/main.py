@@ -119,6 +119,6 @@ else:
     st.altair_chart(pie_chart, use_container_width=True)
 
     # Publication year
-    st.markdown("**Books by Publication Year**")
-    pub_year_counts = book_df["pub_year"].value_counts().sort_index()
-    st.line_chart(pub_year_counts)
+    # st.markdown("**Books by Publication Year**")
+    # pub_year_counts = book_df["pub_year"].value_counts().sort_index()
+    # st.line_chart(pub_year_counts)
